@@ -8,6 +8,373 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* =========================================================
+           CONTACT PAGE SPECIFIC STYLES
+        ========================================================= */
+        
+        :root {
+            --radius: 12px;
+            --transition: all 0.3s ease;
+            --shadow: rgba(0, 0, 0, 0.3);
+            --accent: #7d4bff;
+            --accent-light: #9d7bff;
+            --text: #f0f0f0;
+            --text-dark: #b8b8b8;
+            --bg2: #1e1a2e;
+            --card: #2a2438;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background: #0f0c29;
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 6%;
+            background: rgba(23, 18, 35, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(125, 75, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--accent);
+        }
+        
+        .logo h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: var(--accent-light);
+        }
+        
+        nav {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+        
+        nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 8px 0;
+            position: relative;
+        }
+        
+        nav a:hover {
+            color: var(--accent-light);
+        }
+        
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .contact-hero {
+            text-align: center;
+            padding: 80px 20px;
+            background: linear-gradient(rgba(23, 18, 35, 0.85), rgba(23, 18, 35, 0.85)),
+                        url("photos/contact-bg.jpg") center/cover no-repeat;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-hero::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(125,75,255,0.15), transparent 70%);
+            animation: moveGradient 8s linear infinite;
+        }
+        
+        @keyframes moveGradient {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            100% { transform: translate(100px, 100px) rotate(360deg); }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .contact-hero h1, .contact-hero p {
+            position: relative;
+            z-index: 2;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+        }
+        
+        .contact-hero h1 {
+            font-size: 2.5rem;
+            color: var(--accent-light);
+            margin-bottom: 15px;
+            animation-delay: 0.3s;
+        }
+        
+        .contact-hero p {
+            font-size: 1.1rem;
+            color: var(--text-dark);
+            max-width: 700px;
+            margin: 0 auto;
+            animation-delay: 0.6s;
+        }
+        
+        /* Contact Container */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            padding: 40px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Contact Form Section */
+        .form-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: 0 8px 25px var(--shadow);
+            border: 1px solid rgba(125, 75, 255, 0.2);
+        }
+        
+        .form-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-section h2 i {
+            font-size: 1.4rem;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            background: var(--bg2);
+            border: 1px solid #271c3e;
+            border-radius: var(--radius);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(125, 75, 255, 0.2);
+        }
+        
+        .form-group textarea {
+            min-height: 140px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light));
+            color: #fff;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius);
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: var(--transition);
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(125, 75, 255, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+        
+        /* Info Section */
+        .info-section {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: 0 8px 25px var(--shadow);
+            border: 1px solid rgba(125, 75, 255, 0.2);
+        }
+        
+        .info-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-section h2 i {
+            font-size: 1.4rem;
+        }
+        
+        /* Contact Cards */
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .contact-card {
+            background: var(--bg2);
+            border-radius: var(--radius);
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: var(--transition);
+            border-left: 4px solid var(--accent);
+        }
+        
+        .contact-card:hover {
+            transform: translateX(5px);
+            background: rgba(125, 75, 255, 0.1);
+        }
+        
+        .contact-card i {
+            font-size: 1.6rem;
+            color: var(--accent);
+            width: 45px;
+            height: 45px;
+            background: rgba(125, 75, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .contact-card-content h3 {
+            color: var(--accent-light);
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+        
+        .contact-card-content p {
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+        
+        /* Social Links */
+        .social-section h3 {
+            color: var(--accent-light);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .social-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: var(--bg2);
+            border-radius: 50%;
+            color: var(--text);
+            font-size: 1.2rem;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            color: white;
+            transform: translateY(-5px) rotate(5deg);
+        }
+        
+        /* Revised Map Section */
         .map-section {
             padding: 40px 6%;
             max-width: 1400px;
@@ -24,33 +391,33 @@
             margin-bottom: 25px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--accent);
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             display: flex;
             align-items: center;
             gap: 10px;
         }
         
         .map-section h2 i {
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             color: #8a2be2;
         }
         
         .map-container-wrapper {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
+            gap: 25px;
             align-items: stretch;
             margin-bottom: 30px;
         }
         
         .map-column {
-            flex: 1.5; /* Increased flex for larger map */
+            flex: 1.5;
             min-width: 300px;
-            height: 500px; /* Increased height */
+            height: 450px;
         }
         
         .map-frame {
-            border-radius: 12px;
+            border-radius: var(--radius);
             overflow: hidden;
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
             height: 100%;
@@ -72,8 +439,8 @@
             flex: 1;
             min-width: 300px;
             background: rgba(30, 30, 46, 0.8);
-            padding: 30px;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: var(--radius);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
@@ -86,7 +453,7 @@
             align-items: center;
             gap: 10px;
             color: #ffffff;
-            font-size: 1.5rem;
+            font-size: 1.4rem;
             margin-top: 0;
             margin-bottom: 1rem;
             font-weight: 600;
@@ -100,11 +467,11 @@
             color: #b0b0b0;
             line-height: 1.6;
             margin-bottom: 1.5rem;
-            font-size: 1.05rem;
+            font-size: 1rem;
         }
         
         .map-info-card {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
             padding: 1rem;
             background: rgba(40, 40, 60, 0.6);
             border-radius: 8px;
@@ -124,7 +491,7 @@
             align-items: center;
             gap: 8px;
             color: #ffffff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-top: 0;
             margin-bottom: 0.8rem;
             font-weight: 600;
@@ -152,22 +519,23 @@
         
         .coordinate-row i {
             color: #888;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .coordinate-value {
             font-family: 'Courier New', monospace;
             background: rgba(0, 0, 0, 0.3);
-            padding: 6px 12px;
+            padding: 5px 10px;
             border-radius: 6px;
             font-weight: 500;
             color: #6cb2eb;
             border: 1px solid #444;
+            font-size: 0.9rem;
         }
         
         .coordinate-label {
             color: #888;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         /* Improved Map Button Container */
@@ -175,26 +543,33 @@
             margin-top: auto;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 12px;
         }
         
-        /* Attractive Button with Better Styling */
+        .button-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* Attractive Map Button */
         .map-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            padding: 14px 20px;
+            padding: 12px 18px;
             background: linear-gradient(135deg, #8a2be2 0%, #6a11cb 100%);
             color: white;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
             text-align: center;
             border: none;
-            font-size: 1rem;
+            font-size: 0.95rem;
+            flex: 2;
             position: relative;
             overflow: hidden;
         }
@@ -205,49 +580,23 @@
             background: linear-gradient(135deg, #9b30ff 0%, #7a1dcb 100%);
         }
         
-        .map-button:active {
-            transform: translateY(-1px);
-        }
-        
-        .map-button::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transform: rotate(30deg);
-            transition: all 0.5s ease;
-        }
-        
-        .map-button:hover::after {
-            transform: translateX(100%) rotate(30deg);
-        }
-        
-        .button-note {
-            color: #888;
-            font-size: 0.85rem;
-            text-align: center;
-            margin-top: 5px;
-        }
-        
-        /* Alternative buttons for other services */
         .map-button-alt {
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            padding: 12px 18px;
+            gap: 8px;
+            padding: 10px 15px;
             background: rgba(40, 40, 60, 0.8);
             color: #fff;
             text-decoration: none;
             border-radius: 8px;
             font-weight: 500;
-            transition: all 0.3s ease;
+            transition: var(--transition);
             border: 1px solid #555;
             text-align: center;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 110px;
         }
         
         .map-button-alt:hover {
@@ -256,33 +605,26 @@
             transform: translateY(-2px);
         }
         
-        .button-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        
-        .button-row .map-button {
-            flex: 2;
-        }
-        
-        .button-row .map-button-alt {
-            flex: 1;
-            min-width: 120px;
+        .button-note {
+            color: #888;
+            font-size: 0.8rem;
+            text-align: center;
+            margin-top: 5px;
+            line-height: 1.4;
         }
         
         .getting-here-section {
             margin-top: 2rem;
-            padding: 1.5rem;
+            padding: 1.2rem;
             background: rgba(30, 30, 46, 0.8);
-            border-radius: 12px;
+            border-radius: var(--radius);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             border: 1px solid #444;
         }
         
         .getting-here-section h4 {
             color: #ffffff;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin-top: 0;
             margin-bottom: 1rem;
             font-weight: 600;
@@ -298,20 +640,20 @@
         .transport-options {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
         }
         
         .transport-option {
             flex: 1;
-            min-width: 200px;
-            padding: 1rem;
+            min-width: 180px;
+            padding: 0.8rem;
             background: rgba(40, 40, 60, 0.6);
             border-radius: 8px;
         }
         
         .transport-option h5 {
             color: #ffffff;
-            font-size: 1rem;
+            font-size: 0.95rem;
             margin-bottom: 0.5rem;
             font-weight: 600;
             display: flex;
@@ -333,9 +675,99 @@
         
         .transport-option p {
             color: #b0b0b0;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             margin: 0;
             line-height: 1.5;
+        }
+        
+        /* FAQ Section - Matches Original Design */
+        .faq-section {
+            padding: 40px 6%;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: var(--card);
+            border-radius: var(--radius);
+            margin-top: 40px;
+            border: 1px solid rgba(125, 75, 255, 0.2);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+        
+        .faq-section h2 {
+            color: var(--accent-light);
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--accent);
+            font-size: 1.6rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .faq-section h2 i {
+            font-size: 1.4rem;
+        }
+        
+        .faq-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .faq-item {
+            background: var(--bg2);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            border: 1px solid rgba(125, 75, 255, 0.1);
+        }
+        
+        .faq-item:hover {
+            border-color: var(--accent);
+        }
+        
+        .faq-question {
+            padding: 18px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+        }
+        
+        .faq-question i {
+            color: var(--accent);
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 0 18px 18px 18px;
+            max-height: 300px;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 60px;
+            background: rgba(23, 18, 35, 0.9);
+            border-top: 1px solid rgba(125, 75, 255, 0.2);
+            color: var(--text-dark);
+            font-size: 0.9rem;
         }
         
         /* Animations */
@@ -359,33 +791,222 @@
             animation: float 3s infinite ease-in-out;
         }
         
-        /* Responsive Adjustments */
+        /* =========================================================
+           MOBILE RESPONSIVE STYLES
+        ========================================================= */
+        @media (max-width: 1200px) {
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .map-column {
+                height: 400px;
+            }
+        }
+        
         @media (max-width: 992px) {
             .map-container-wrapper {
                 flex-direction: column;
             }
             
             .map-column {
-                height: 400px; /* Adjust height for tablet */
+                height: 380px;
+                flex: 1;
+            }
+            
+            .map-info-column {
+                width: 100%;
+            }
+            
+            .transport-options {
+                flex-direction: column;
+            }
+            
+            .transport-option {
+                min-width: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 20px;
+                padding: 15px 20px;
+            }
+            
+            nav {
+                gap: 15px;
+                justify-content: center;
+            }
+            
+            nav a {
+                font-size: 0.9rem;
+            }
+            
+            .contact-hero {
+                padding: 60px 20px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 2rem;
+            }
+            
+            .contact-hero p {
+                font-size: 1rem;
+            }
+            
+            .contact-container {
+                padding: 30px 20px;
+            }
+            
+            .form-section,
+            .info-section,
+            .map-section,
+            .faq-section {
+                padding: 20px;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .map-column {
+                height: 320px;
             }
             
             .button-row {
                 flex-direction: column;
             }
+            
+            .map-button,
+            .map-button-alt {
+                width: 100%;
+                flex: none;
+                min-width: auto;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
         }
         
-        @media (max-width: 768px) {
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            .logo img {
+                height: 40px;
+                width: 40px;
+            }
+            
+            .contact-hero {
+                padding: 50px 15px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            nav {
+                gap: 12px;
+            }
+            
+            nav a {
+                font-size: 0.85rem;
+            }
+            
             .map-column {
-                height: 350px; /* Adjust height for mobile */
-                flex: 1;
+                height: 280px;
             }
             
             .map-info-column {
                 padding: 20px;
             }
             
-            .transport-options {
+            .coordinate-row {
+                flex-wrap: wrap;
+            }
+            
+            .coordinate-label {
+                flex-basis: 100%;
+                margin-top: 4px;
+            }
+            
+            .form-section h2,
+            .info-section h2,
+            .map-section h2,
+            .faq-section h2 {
+                font-size: 1.4rem;
+            }
+            
+            .contact-card {
                 flex-direction: column;
+                text-align: center;
+                gap: 12px;
+            }
+            
+            .contact-card i {
+                width: 40px;
+                height: 40px;
+                font-size: 1.4rem;
+            }
+            
+            .contact-card-content h3 {
+                font-size: 1rem;
+            }
+            
+            .contact-card-content p {
+                font-size: 0.85rem;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .map-column {
+                height: 250px;
+            }
+            
+            .contact-hero h1 {
+                font-size: 1.6rem;
+            }
+            
+            .form-section,
+            .info-section,
+            .map-section,
+            .faq-section {
+                padding: 15px;
+            }
+        }
+        
+        /* Touch-friendly adjustments */
+        @media (hover: none) and (pointer: coarse) {
+            .map-button:hover,
+            .submit-btn:hover,
+            .social-link:hover,
+            .contact-card:hover,
+            .map-button-alt:hover {
+                transform: none;
+            }
+            
+            .map-button:active,
+            .submit-btn:active {
+                transform: scale(0.98);
+            }
+            
+            nav a::after {
+                display: none;
+            }
+            
+            .faq-question {
+                padding: 20px;
+            }
+            
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
             }
         }
     </style>
@@ -472,7 +1093,7 @@
                     <i class="fas fa-map-marker-alt"></i>
                     <div class="contact-card-content">
                         <h3>Our Location</h3>
-                        <p>BLock 14 Music Avenue, Suite <br>Baguio, TN 37203<br>Philippines</p>
+                        <p>BLock 14 Music Avenue, Suite<br>Baguio, TN 37203<br>Philippines</p>
                     </div>
                 </div>
                 
@@ -519,12 +1140,12 @@
         </section>
     </div>
 
-    <!-- Revised Map Section with Larger Map and Better Button -->
+    <!-- Map Section -->
     <section class="map-section">
         <h2><i class="fas fa-map-marked-alt"></i> Find Our Studio</h2>
         
         <div class="map-container-wrapper">
-            <!-- Map Column - Now Larger -->
+            <!-- Map Column -->
             <div class="map-column">
                 <div class="map-frame">
                     <iframe 
@@ -565,10 +1186,9 @@
                     <p>Known as the <strong style="color: #ff6b8b;">"Summer Capital of the Philippines"</strong>, Baguio is located in the Cordillera Central mountain range of Northern Luzon. The city is famous for its cool climate, pine trees, and vibrant music scene.</p>
                 </div>
                 
-                <!-- Improved Button Container -->
                 <div class="map-button-container">
                     <div class="button-row">
-                        <a href="https://www.google.com/maps/place/Baguio,+Benguet/@16.3960013,120.5899162,13z/data=!3m1!4b1!4m6!3m5!1s0x3391a16879def13f:0x8edef534be3a75c0!8m2!3d16.4129692!4d120.5913973!16zL20vMDE1bDFf?entry=ttu&g_ep=EgoyMDI1MTEzMC4wIKXMDSoASAFQAw%3D%3D" 
+                        <a href="https://www.google.com/maps/place/Baguio,+Benguet/@16.3960013,120.5899162,13z/data=!3m1!4b1!4m6!3m5!1s0x3391a16879def13f:0x8edef534be3a75c0!8m2!3d16.4129692!4d120.5913973!16zL20vMDE1bDFf?entry=ttu&g_ep=EgoyMDI5MTEzMC4wIKXMDSoASAFQAw%3D%3D" 
                            target="_blank" 
                            rel="noopener noreferrer"
                            class="map-button">
@@ -674,14 +1294,17 @@
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const faqItem = question.parentElement;
-                faqItem.classList.toggle('active');
+                const isActive = faqItem.classList.contains('active');
                 
-                // Close other open FAQs
+                // Close all FAQ items
                 document.querySelectorAll('.faq-item').forEach(item => {
-                    if (item !== faqItem && item.classList.contains('active')) {
-                        item.classList.remove('active');
-                    }
+                    item.classList.remove('active');
                 });
+                
+                // If the clicked item wasn't active, open it
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
             });
         });
         
@@ -690,12 +1313,19 @@
             e.preventDefault();
             
             // Simple form validation
-            const firstName = document.getElementById('firstName').value;
-            const email = document.getElementById('email').value;
-            const message = document.getElementById('message').value;
+            const firstName = document.getElementById('firstName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
             
             if (!firstName || !email || !message) {
                 alert('Please fill in all required fields.');
+                return;
+            }
+            
+            // Email validation
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                alert('Please enter a valid email address.');
                 return;
             }
             
@@ -726,45 +1356,74 @@
             }
         });
         
-        // Add click animation to map button
-        document.querySelector('.map-button').addEventListener('click', function(e) {
-            // Add a ripple effect
-            const ripple = document.createElement('span');
-            const rect = this.getBoundingClientRect();
-            const size = Math.max(rect.width, rect.height);
-            const x = e.clientX - rect.left - size / 2;
-            const y = e.clientY - rect.top - size / 2;
+        // Add touch feedback for mobile devices
+        document.querySelectorAll('.map-button, .submit-btn, .map-button-alt').forEach(button => {
+            button.addEventListener('touchstart', function() {
+                this.style.opacity = '0.8';
+            });
             
-            ripple.style.cssText = `
-                position: absolute;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.3);
-                transform: scale(0);
-                animation: ripple 0.6s linear;
-                width: ${size}px;
-                height: ${size}px;
-                top: ${y}px;
-                left: ${x}px;
-            `;
-            
-            this.appendChild(ripple);
-            
-            setTimeout(() => {
-                ripple.remove();
-            }, 600);
+            button.addEventListener('touchend', function() {
+                this.style.opacity = '1';
+            });
         });
         
-        // Add CSS for ripple animation
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes ripple {
-                to {
-                    transform: scale(4);
-                    opacity: 0;
+        // Mobile menu toggle for very small screens
+        if (window.innerWidth <= 480) {
+            const nav = document.querySelector('nav');
+            const header = document.querySelector('header');
+            
+            // Create mobile menu button
+            const menuButton = document.createElement('button');
+            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+            menuButton.style.cssText = `
+                background: transparent;
+                border: none;
+                color: var(--accent-light);
+                font-size: 1.5rem;
+                cursor: pointer;
+                position: absolute;
+                right: 20px;
+                top: 20px;
+                z-index: 1001;
+            `;
+            
+            header.style.position = 'relative';
+            header.appendChild(menuButton);
+            
+            // Initially hide nav on very small screens
+            nav.style.display = 'none';
+            nav.style.flexDirection = 'column';
+            nav.style.width = '100%';
+            nav.style.marginTop = '10px';
+            
+            // Toggle menu
+            menuButton.addEventListener('click', function() {
+                if (nav.style.display === 'none' || nav.style.display === '') {
+                    nav.style.display = 'flex';
+                    this.innerHTML = '<i class="fas fa-times"></i>';
+                } else {
+                    nav.style.display = 'none';
+                    this.innerHTML = '<i class="fas fa-bars"></i>';
                 }
+            });
+            
+            // Close menu when clicking outside
+            document.addEventListener('click', function(event) {
+                if (!header.contains(event.target) && window.innerWidth <= 480) {
+                    nav.style.display = 'none';
+                    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
+                }
+            });
+        }
+        
+        // Auto-close FAQ on mobile when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.faq-item') && window.innerWidth <= 768) {
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
             }
-        `;
-        document.head.appendChild(style);
+        });
     </script>
 </body>
 </html>
