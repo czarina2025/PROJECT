@@ -8,10 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* =========================================================
-           CONTACT PAGE SPECIFIC STYLES
-        ========================================================= */
-        
         :root {
             --radius: 12px;
             --transition: all 0.3s ease;
@@ -24,6 +20,10 @@
             --card: #2a2438;
         }
         
+        * {
+            box-sizing: border-box;
+        }
+        
         body {
             margin: 0;
             padding: 0;
@@ -31,26 +31,31 @@
             color: var(--text);
             font-family: 'Poppins', sans-serif;
             line-height: 1.6;
+            overflow-x: hidden;
         }
         
-        /* Header Styles */
+        /* Header Styles with Hamburger Menu */
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px 6%;
-            background: rgba(23, 18, 35, 0.95);
+            background: rgba(23, 18, 35, 0.98);
             backdrop-filter: blur(10px);
             border-bottom: 1px solid rgba(125, 75, 255, 0.2);
-            position: sticky;
+            position: fixed;
             top: 0;
+            left: 0;
+            right: 0;
             z-index: 1000;
+            transition: var(--transition);
         }
         
         .logo {
             display: flex;
             align-items: center;
             gap: 15px;
+            z-index: 1001;
         }
         
         .logo img {
@@ -67,13 +72,13 @@
             color: var(--accent-light);
         }
         
-        nav {
+        /* Desktop Navigation */
+        .desktop-nav {
             display: flex;
             gap: 25px;
-            flex-wrap: wrap;
         }
         
-        nav a {
+        .desktop-nav a {
             color: var(--text);
             text-decoration: none;
             font-weight: 500;
@@ -82,11 +87,11 @@
             position: relative;
         }
         
-        nav a:hover {
+        .desktop-nav a:hover {
             color: var(--accent-light);
         }
         
-        nav a::after {
+        .desktop-nav a::after {
             content: '';
             position: absolute;
             bottom: 0;
@@ -97,8 +102,104 @@
             transition: width 0.3s ease;
         }
         
-        nav a:hover::after {
+        .desktop-nav a:hover::after {
             width: 100%;
+        }
+        
+        /* Hamburger Menu Button */
+        .hamburger-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--accent-light);
+            font-size: 1.8rem;
+            cursor: pointer;
+            padding: 8px;
+            z-index: 1001;
+            transition: var(--transition);
+        }
+        
+        .hamburger-menu:hover {
+            color: white;
+        }
+        
+        /* Mobile Navigation Overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(15, 12, 41, 0.98);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+        }
+        
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            width: 100%;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 80vh;
+        }
+        
+        .mobile-nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 500;
+            padding: 15px 30px;
+            border-radius: var(--radius);
+            transition: var(--transition);
+            width: 100%;
+            max-width: 300px;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+        
+        .mobile-nav a:hover,
+        .mobile-nav a.active {
+            color: var(--accent-light);
+            background: rgba(125, 75, 255, 0.1);
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .close-menu {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: none;
+            border: none;
+            color: var(--accent-light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .close-menu:hover {
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        /* Main content adjustment for fixed header */
+        .main-content {
+            margin-top: 90px;
         }
         
         .contact-hero {
@@ -680,7 +781,7 @@
             line-height: 1.5;
         }
         
-        /* FAQ Section - Matches Original Design */
+        /* FAQ Section */
         .faq-section {
             padding: 40px 6%;
             max-width: 1400px;
@@ -794,7 +895,15 @@
         /* =========================================================
            MOBILE RESPONSIVE STYLES
         ========================================================= */
-        @media (max-width: 1200px) {
+        @media (max-width: 1024px) {
+            .hamburger-menu {
+                display: block;
+            }
+            
+            .desktop-nav {
+                display: none;
+            }
+            
             .contact-container {
                 grid-template-columns: 1fr;
                 gap: 30px;
@@ -805,43 +914,26 @@
             }
         }
         
-        @media (max-width: 992px) {
-            .map-container-wrapper {
-                flex-direction: column;
-            }
-            
-            .map-column {
-                height: 380px;
-                flex: 1;
-            }
-            
-            .map-info-column {
-                width: 100%;
-            }
-            
-            .transport-options {
-                flex-direction: column;
-            }
-            
-            .transport-option {
-                min-width: 100%;
-            }
-        }
-        
         @media (max-width: 768px) {
             header {
-                flex-direction: column;
-                gap: 20px;
                 padding: 15px 20px;
             }
             
-            nav {
-                gap: 15px;
-                justify-content: center;
+            .logo h1 {
+                font-size: 1.5rem;
             }
             
-            nav a {
-                font-size: 0.9rem;
+            .logo img {
+                height: 40px;
+                width: 40px;
+            }
+            
+            .hamburger-menu {
+                font-size: 1.5rem;
+            }
+            
+            .main-content {
+                margin-top: 80px;
             }
             
             .contact-hero {
@@ -872,8 +964,17 @@
                 gap: 15px;
             }
             
+            .map-container-wrapper {
+                flex-direction: column;
+            }
+            
             .map-column {
-                height: 320px;
+                height: 350px;
+                flex: 1;
+            }
+            
+            .map-info-column {
+                width: 100%;
             }
             
             .button-row {
@@ -887,21 +988,25 @@
                 min-width: auto;
             }
             
+            .transport-options {
+                flex-direction: column;
+            }
+            
+            .transport-option {
+                min-width: 100%;
+            }
+            
             .social-links {
                 justify-content: center;
+            }
+            
+            .mobile-nav a {
+                font-size: 1.3rem;
+                padding: 12px 25px;
             }
         }
         
         @media (max-width: 480px) {
-            .logo h1 {
-                font-size: 1.5rem;
-            }
-            
-            .logo img {
-                height: 40px;
-                width: 40px;
-            }
-            
             .contact-hero {
                 padding: 50px 15px;
             }
@@ -910,16 +1015,8 @@
                 font-size: 1.8rem;
             }
             
-            nav {
-                gap: 12px;
-            }
-            
-            nav a {
-                font-size: 0.85rem;
-            }
-            
             .map-column {
-                height: 280px;
+                height: 300px;
             }
             
             .map-info-column {
@@ -961,6 +1058,21 @@
             .contact-card-content p {
                 font-size: 0.85rem;
             }
+            
+            .mobile-nav {
+                gap: 20px;
+            }
+            
+            .mobile-nav a {
+                font-size: 1.2rem;
+                padding: 10px 20px;
+            }
+            
+            .close-menu {
+                top: 20px;
+                right: 20px;
+                font-size: 1.8rem;
+            }
         }
         
         @media (max-width: 360px) {
@@ -977,6 +1089,11 @@
             .map-section,
             .faq-section {
                 padding: 15px;
+            }
+            
+            .mobile-nav a {
+                font-size: 1.1rem;
+                padding: 10px 15px;
             }
         }
         
@@ -995,12 +1112,8 @@
                 transform: scale(0.98);
             }
             
-            nav a::after {
-                display: none;
-            }
-            
-            .faq-question {
-                padding: 20px;
+            .mobile-nav a:active {
+                transform: scale(0.95);
             }
             
             .form-group input,
@@ -1012,13 +1125,15 @@
     </style>
 </head>
 <body>
+    <!-- Header with Hamburger Menu -->
     <header>
         <div class="logo">
             <img src="photos/logo.jpg" alt="Music Universe Logo">
             <h1>Music Universe</h1>
         </div>
         
-        <nav>
+        <!-- Desktop Navigation -->
+        <nav class="desktop-nav">
             <a href="home.html">Home</a>
             <a href="band.html">Band Members</a>
             <a href="albums.html">Albums</a>
@@ -1026,270 +1141,334 @@
             <a href="media.html">Media</a>
             <a href="contact.html" style="color: var(--accent-light);">Contact</a>
         </nav>
+        
+        <!-- Hamburger Menu Button -->
+        <button class="hamburger-menu" id="hamburgerBtn" aria-label="Open menu">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
 
-    <section class="contact-hero">
-        <h1>Get In Touch</h1>
-        <p>Have questions, feedback, or just want to say hello? We'd love to hear from you. Connect with us through any of the channels below.</p>
-    </section>
-
-    <div class="contact-container">
-        <!-- Contact Form -->
-        <section class="form-section">
-            <h2><i class="fas fa-paper-plane"></i> Send Us a Message</h2>
-            <form class="contact-form" id="contactForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name *</label>
-                        <input type="text" id="firstName" name="firstName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name *</label>
-                        <input type="text" id="lastName" name="lastName" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address *</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="subject">Subject</label>
-                    <select id="subject" name="subject">
-                        <option value="">Select a topic</option>
-                        <option value="general">General Inquiry</option>
-                        <option value="support">Technical Support</option>
-                        <option value="press">Press & Media</option>
-                        <option value="collab">Collaboration</option>
-                        <option value="feedback">Feedback</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="message">Your Message *</label>
-                    <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="attachment">Attach File (Optional)</label>
-                    <input type="file" id="attachment" name="attachment">
-                    <small style="color: var(--text-dark); font-size: 0.9rem;">Max file size: 5MB. Allowed: .jpg, .png, .pdf</small>
-                </div>
-                
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-paper-plane"></i> Send Message
-                </button>
-            </form>
-        </section>
-
-        <!-- Contact Info -->
-        <section class="info-section">
-            <h2><i class="fas fa-info-circle"></i> Contact Information</h2>
-            
-            <div class="contact-cards">
-                <div class="contact-card">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <div class="contact-card-content">
-                        <h3>Our Location</h3>
-                        <p>BLock 14 Music Avenue, Suite<br>Baguio, TN 37203<br>Philippines</p>
-                    </div>
-                </div>
-                
-                <div class="contact-card">
-                    <i class="fas fa-envelope"></i>
-                    <div class="contact-card-content">
-                        <h3>Email Us</h3>
-                        <p>info@musicuniverse.com<br>support@musicuniverse.com<br>press@musicuniverse.com</p>
-                    </div>
-                </div>
-                
-                <div class="contact-card">
-                    <i class="fas fa-phone-alt"></i>
-                    <div class="contact-card-content">
-                        <h3>Call Us</h3>
-                        <p>+63 9589 343 5739<br>Mon-Fri: 9AM-6PM EST</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="social-section">
-                <h3>Follow Us</h3>
-                <div class="social-links">
-                    <a href="https://facebook.com" class="social-link" target="_blank">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://twitter.com" class="social-link" target="_blank">
-                        <i class="fab fa-twitter"></i>
-                    </a>
-                    <a href="https://instagram.com" class="social-link" target="_blank">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://youtube.com" class="social-link" target="_blank">
-                        <i class="fab fa-youtube"></i>
-                    </a>
-                    <a href="https://spotify.com" class="social-link" target="_blank">
-                        <i class="fab fa-spotify"></i>
-                    </a>
-                    <a href="https://tiktok.com" class="social-link" target="_blank">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                </div>
-            </div>
-        </section>
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <button class="close-menu" id="closeMenuBtn" aria-label="Close menu">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <nav class="mobile-nav">
+            <a href="home.html">Home</a>
+            <a href="band.html">Band Members</a>
+            <a href="albums.html">Albums</a>
+            <a href="tour.html">Tour Dates</a>
+            <a href="media.html">Media</a>
+            <a href="contact.html" style="color: var(--accent-light);">Contact</a>
+        </nav>
     </div>
 
-    <!-- Map Section -->
-    <section class="map-section">
-        <h2><i class="fas fa-map-marked-alt"></i> Find Our Studio</h2>
-        
-        <div class="map-container-wrapper">
-            <!-- Map Column -->
-            <div class="map-column">
-                <div class="map-frame">
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489198.2173322061!2d120.58991615000001!3d16.3960013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3391a16879def13f%3A0x8edef534be3a75c0!2sBaguio%2C%20Benguet!5e0!3m2!1sen!2sph!4v1742388181447!5m2!1sen!2sph" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade"
-                        title="Google Maps showing Baguio, Benguet location">
-                    </iframe>
-                </div>
-            </div>
-            
-            <!-- Info Column -->
-            <div class="map-info-column">
-                <div class="map-location-header">
-                    <h3><i class="fas fa-location-dot"></i> Baguio, Benguet</h3>
-                    <p>Visit our flagship recording studio in the beautiful mountain city known as the summer capital of the Philippines.</p>
-                </div>
-                
-                <div class="map-info-card map-coordinates-card">
-                    <h4><i class="fas fa-globe-americas"></i> Coordinates</h4>
-                    <div class="coordinate-display">
-                        <div class="coordinate-row">
-                            <i class="fas fa-arrow-up"></i>
-                            <span class="coordinate-value">16.4129692° N</span>
-                            <span class="coordinate-label">Latitude</span>
+    <!-- Main Content -->
+    <div class="main-content">
+        <section class="contact-hero">
+            <h1>Get In Touch</h1>
+            <p>Have questions, feedback, or just want to say hello? We'd love to hear from you. Connect with us through any of the channels below.</p>
+        </section>
+
+        <div class="contact-container">
+            <!-- Contact Form -->
+            <section class="form-section">
+                <h2><i class="fas fa-paper-plane"></i> Send Us a Message</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <input type="text" id="firstName" name="firstName" required>
                         </div>
-                        <div class="coordinate-row">
-                            <i class="fas fa-arrow-right"></i>
-                            <span class="coordinate-value">120.5913973° E</span>
-                            <span class="coordinate-label">Longitude</span>
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <input type="text" id="lastName" name="lastName" required>
                         </div>
-                    </div>
-                </div>
-                
-                <div class="map-info-card map-about-card">
-                    <h4><i class="fas fa-info-circle"></i> About Baguio</h4>
-                    <p>Known as the <strong style="color: #ff6b8b;">"Summer Capital of the Philippines"</strong>, Baguio is located in the Cordillera Central mountain range of Northern Luzon. The city is famous for its cool climate, pine trees, and vibrant music scene.</p>
-                </div>
-                
-                <div class="map-button-container">
-                    <div class="button-row">
-                        <a href="https://www.google.com/maps/place/Baguio,+Benguet/@16.3960013,120.5899162,13z/data=!3m1!4b1!4m6!3m5!1s0x3391a16879def13f:0x8edef534be3a75c0!8m2!3d16.4129692!4d120.5913973!16zL20vMDE1bDFf?entry=ttu&g_ep=EgoyMDI5MTEzMC4wIKXMDSoASAFQAw%3D%3D" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="map-button">
-                            <i class="fas fa-external-link-alt"></i>
-                            Open in Google Maps
-                        </a>
-                        
-                        <a href="https://maps.apple.com/?q=Baguio+Benguet" 
-                           target="_blank" 
-                           rel="noopener noreferrer"
-                           class="map-button-alt">
-                            <i class="fab fa-apple"></i>
-                            Apple Maps
-                        </a>
                     </div>
                     
-                    <p class="button-note">Opens in a new window • Get directions to our studio</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="getting-here-section">
-            <h4><i class="fas fa-directions"></i> Getting Here</h4>
-            <div class="transport-options">
-                <div class="transport-option">
-                    <h5><i class="fas fa-car"></i> By Car</h5>
-                    <p>Approximately 4-6 hours from Manila via NLEX, SCTEX, and TPLEX. Ample parking available at our facility.</p>
-                </div>
-                <div class="transport-option">
-                    <h5><i class="fas fa-bus"></i> By Bus</h5>
-                    <p>Regular bus services from Manila, Dagupan, and other major cities. Our studio is 15 minutes from the terminal.</p>
-                </div>
-                <div class="transport-option">
-                    <h5><i class="fas fa-plane"></i> By Air</h5>
-                    <p>Loakan Airport serves chartered flights (commercial flights currently suspended). We can arrange airport pickup.</p>
-                </div>
-            </div>
-        </div>
-    </section>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="subject">Subject</label>
+                        <select id="subject" name="subject">
+                            <option value="">Select a topic</option>
+                            <option value="general">General Inquiry</option>
+                            <option value="support">Technical Support</option>
+                            <option value="press">Press & Media</option>
+                            <option value="collab">Collaboration</option>
+                            <option value="feedback">Feedback</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="message">Your Message *</label>
+                        <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attachment">Attach File (Optional)</label>
+                        <input type="file" id="attachment" name="attachment">
+                        <small style="color: var(--text-dark); font-size: 0.9rem;">Max file size: 5MB. Allowed: .jpg, .png, .pdf</small>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </section>
 
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
-        <div class="faq-container">
-            <div class="faq-item">
-                <div class="faq-question">
-                    How long does it take to get a response?
-                    <i class="fas fa-chevron-down"></i>
+            <!-- Contact Info -->
+            <section class="info-section">
+                <h2><i class="fas fa-info-circle"></i> Contact Information</h2>
+                
+                <div class="contact-cards">
+                    <div class="contact-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-card-content">
+                            <h3>Our Location</h3>
+                            <p>BLock 14 Music Avenue, Suite<br>Baguio, TN 37203<br>Philippines</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-card-content">
+                            <h3>Email Us</h3>
+                            <p>info@musicuniverse.com<br>support@musicuniverse.com<br>press@musicuniverse.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <i class="fas fa-phone-alt"></i>
+                        <div class="contact-card-content">
+                            <h3>Call Us</h3>
+                            <p>+63 9589 343 5739<br>Mon-Fri: 9AM-6PM EST</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="faq-answer">
-                    We strive to respond to all inquiries within 24-48 hours during business days. Press and media inquiries may take slightly longer.
+                
+                <div class="social-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="https://facebook.com" class="social-link" target="_blank">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://twitter.com" class="social-link" target="_blank">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://instagram.com" class="social-link" target="_blank">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://youtube.com" class="social-link" target="_blank">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://spotify.com" class="social-link" target="_blank">
+                            <i class="fab fa-spotify"></i>
+                        </a>
+                        <a href="https://tiktok.com" class="social-link" target="_blank">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    Can I submit my music for consideration?
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Yes! We're always looking for new talent. Please send your music to submissions@musicuniverse.com with a brief bio and links to your work.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    Do you offer internships or job opportunities?
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    We periodically offer internships and job openings. Check our Careers page or follow us on social media for announcements.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    How can I report a technical issue on the website?
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Please use the "Technical Support" option in the contact form above or email support@musicuniverse.com with details and screenshots if possible.
-                </div>
-            </div>
-            
-            <div class="faq-item">
-                <div class="faq-question">
-                    Are you available for interviews or speaking engagements?
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div class="faq-answer">
-                    Our team members are occasionally available for interviews and speaking engagements. Please contact press@musicuniverse.com with details about your request.
-                </div>
-            </div>
+            </section>
         </div>
-    </section>
 
-    <footer>
-        <p>© 2025 Music Universe. All rights reserved.</p>
-    </footer>
+        <!-- Map Section -->
+        <section class="map-section">
+            <h2><i class="fas fa-map-marked-alt"></i> Find Our Studio</h2>
+            
+            <div class="map-container-wrapper">
+                <!-- Map Column -->
+                <div class="map-column">
+                    <div class="map-frame">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489198.2173322061!2d120.58991615000001!3d16.3960013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3391a16879def13f%3A0x8edef534be3a75c0!2sBaguio%2C%20Benguet!5e0!3m2!1sen!2sph!4v1742388181447!5m2!1sen!2sph" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Google Maps showing Baguio, Benguet location">
+                        </iframe>
+                    </div>
+                </div>
+                
+                <!-- Info Column -->
+                <div class="map-info-column">
+                    <div class="map-location-header">
+                        <h3><i class="fas fa-location-dot"></i> Baguio, Benguet</h3>
+                        <p>Visit our flagship recording studio in the beautiful mountain city known as the summer capital of the Philippines.</p>
+                    </div>
+                    
+                    <div class="map-info-card map-coordinates-card">
+                        <h4><i class="fas fa-globe-americas"></i> Coordinates</h4>
+                        <div class="coordinate-display">
+                            <div class="coordinate-row">
+                                <i class="fas fa-arrow-up"></i>
+                                <span class="coordinate-value">16.4129692° N</span>
+                                <span class="coordinate-label">Latitude</span>
+                            </div>
+                            <div class="coordinate-row">
+                                <i class="fas fa-arrow-right"></i>
+                                <span class="coordinate-value">120.5913973° E</span>
+                                <span class="coordinate-label">Longitude</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="map-info-card map-about-card">
+                        <h4><i class="fas fa-info-circle"></i> About Baguio</h4>
+                        <p>Known as the <strong style="color: #ff6b8b;">"Summer Capital of the Philippines"</strong>, Baguio is located in the Cordillera Central mountain range of Northern Luzon. The city is famous for its cool climate, pine trees, and vibrant music scene.</p>
+                    </div>
+                    
+                    <div class="map-button-container">
+                        <div class="button-row">
+                            <a href="https://www.google.com/maps/place/Baguio,+Benguet/@16.3960013,120.5899162,13z/data=!3m1!4b1!4m6!3m5!1s0x3391a16879def13f:0x8edef534be3a75c0!8m2!3d16.4129692!4d120.5913973!16zL20vMDE1bDFf?entry=ttu&g_ep=EgoyMDI5MTEzMC4wIKXMDSoASAFQAw%3D%3D" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="map-button">
+                                <i class="fas fa-external-link-alt"></i>
+                                Open in Google Maps
+                            </a>
+                            
+                            <a href="https://maps.apple.com/?q=Baguio+Benguet" 
+                               target="_blank" 
+                               rel="noopener noreferrer"
+                               class="map-button-alt">
+                                <i class="fab fa-apple"></i>
+                                Apple Maps
+                            </a>
+                        </div>
+                        
+                        <p class="button-note">Opens in a new window • Get directions to our studio</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="getting-here-section">
+                <h4><i class="fas fa-directions"></i> Getting Here</h4>
+                <div class="transport-options">
+                    <div class="transport-option">
+                        <h5><i class="fas fa-car"></i> By Car</h5>
+                        <p>Approximately 4-6 hours from Manila via NLEX, SCTEX, and TPLEX. Ample parking available at our facility.</p>
+                    </div>
+                    <div class="transport-option">
+                        <h5><i class="fas fa-bus"></i> By Bus</h5>
+                        <p>Regular bus services from Manila, Dagupan, and other major cities. Our studio is 15 minutes from the terminal.</p>
+                    </div>
+                    <div class="transport-option">
+                        <h5><i class="fas fa-plane"></i> By Air</h5>
+                        <p>Loakan Airport serves chartered flights (commercial flights currently suspended). We can arrange airport pickup.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section class="faq-section">
+            <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How long does it take to get a response?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We strive to respond to all inquiries within 24-48 hours during business days. Press and media inquiries may take slightly longer.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Can I submit my music for consideration?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Yes! We're always looking for new talent. Please send your music to submissions@musicuniverse.com with a brief bio and links to your work.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Do you offer internships or job opportunities?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        We periodically offer internships and job openings. Check our Careers page or follow us on social media for announcements.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        How can I report a technical issue on the website?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Please use the "Technical Support" option in the contact form above or email support@musicuniverse.com with details and screenshots if possible.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Are you available for interviews or speaking engagements?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Our team members are occasionally available for interviews and speaking engagements. Please contact press@musicuniverse.com with details about your request.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>© 2025 Music Universe. All rights reserved.</p>
+        </footer>
+    </div>
 
     <script>
+        // Hamburger Menu Functionality
+        const hamburgerBtn = document.getElementById('hamburgerBtn');
+        const closeMenuBtn = document.getElementById('closeMenuBtn');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        const body = document.body;
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav a');
+
+        // Open mobile menu
+        hamburgerBtn.addEventListener('click', () => {
+            mobileNavOverlay.classList.add('active');
+            body.style.overflow = 'hidden'; // Prevent body scrolling
+        });
+
+        // Close mobile menu
+        function closeMobileMenu() {
+            mobileNavOverlay.classList.remove('active');
+            body.style.overflow = ''; // Restore body scrolling
+        }
+
+        closeMenuBtn.addEventListener('click', closeMobileMenu);
+
+        // Close menu when clicking on a link
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close menu when clicking outside
+        mobileNavOverlay.addEventListener('click', (e) => {
+            if (e.target === mobileNavOverlay) {
+                closeMobileMenu();
+            }
+        });
+
+        // Close menu with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && mobileNavOverlay.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
         // FAQ Accordion
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
@@ -1355,9 +1534,9 @@
                 return;
             }
         });
-        
+
         // Add touch feedback for mobile devices
-        document.querySelectorAll('.map-button, .submit-btn, .map-button-alt').forEach(button => {
+        document.querySelectorAll('.map-button, .submit-btn, .map-button-alt, .mobile-nav a').forEach(button => {
             button.addEventListener('touchstart', function() {
                 this.style.opacity = '0.8';
             });
@@ -1366,64 +1545,38 @@
                 this.style.opacity = '1';
             });
         });
-        
-        // Mobile menu toggle for very small screens
-        if (window.innerWidth <= 480) {
-            const nav = document.querySelector('nav');
-            const header = document.querySelector('header');
+
+        // Add scroll effect to header
+        let lastScrollTop = 0;
+        const header = document.querySelector('header');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
             
-            // Create mobile menu button
-            const menuButton = document.createElement('button');
-            menuButton.innerHTML = '<i class="fas fa-bars"></i>';
-            menuButton.style.cssText = `
-                background: transparent;
-                border: none;
-                color: var(--accent-light);
-                font-size: 1.5rem;
-                cursor: pointer;
-                position: absolute;
-                right: 20px;
-                top: 20px;
-                z-index: 1001;
-            `;
-            
-            header.style.position = 'relative';
-            header.appendChild(menuButton);
-            
-            // Initially hide nav on very small screens
-            nav.style.display = 'none';
-            nav.style.flexDirection = 'column';
-            nav.style.width = '100%';
-            nav.style.marginTop = '10px';
-            
-            // Toggle menu
-            menuButton.addEventListener('click', function() {
-                if (nav.style.display === 'none' || nav.style.display === '') {
-                    nav.style.display = 'flex';
-                    this.innerHTML = '<i class="fas fa-times"></i>';
-                } else {
-                    nav.style.display = 'none';
-                    this.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-            
-            // Close menu when clicking outside
-            document.addEventListener('click', function(event) {
-                if (!header.contains(event.target) && window.innerWidth <= 480) {
-                    nav.style.display = 'none';
-                    menuButton.innerHTML = '<i class="fas fa-bars"></i>';
-                }
-            });
-        }
-        
-        // Auto-close FAQ on mobile when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.faq-item') && window.innerWidth <= 768) {
-                document.querySelectorAll('.faq-item').forEach(item => {
-                    item.classList.remove('active');
-                });
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                header.style.transform = 'translateY(-100%)';
+            } else {
+                // Scrolling up
+                header.style.transform = 'translateY(0)';
             }
+            
+            // Add shadow when scrolled
+            if (scrollTop > 50) {
+                header.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.2)';
+            } else {
+                header.style.boxShadow = 'none';
+            }
+            
+            lastScrollTop = scrollTop;
         });
+
+        // Prevent body scroll when mobile menu is open
+        document.addEventListener('touchmove', function(e) {
+            if (mobileNavOverlay.classList.contains('active')) {
+                e.preventDefault();
+            }
+        }, { passive: false });
     </script>
 </body>
 </html>
