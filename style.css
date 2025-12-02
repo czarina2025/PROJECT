@@ -461,3 +461,51 @@ footer {
     border-top: 1px solid rgba(255,255,255,.1);
     margin-top: 40px;
 }
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+header {
+flex-direction: column;
+text-align: center;
+}
+
+
+nav {
+justify-content: center;
+gap: 10px;
+}
+
+
+.hero {
+padding: 70px 20px;
+}
+
+
+.hero h2 {
+font-size: 1.8rem;
+}
+
+
+.hero p {
+font-size: 1rem;
+}
+}
+
+
+@media (max-width: 480px) {
+.logo img {
+width: 40px;
+height: 40px;
+}
+
+
+nav {
+flex-direction: column;
+gap: 5px;
+}
+
+
+.hero h2 {
+font-size: 1.5rem;
+}
+}
