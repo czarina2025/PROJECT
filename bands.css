@@ -13,25 +13,33 @@
     --transition: 0.3s ease;
 }
 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 /* BODY */
 body {
     margin: 0;
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     background: var(--bg);
     color: var(--text);
+    overflow-x: hidden;
 }
 
-/* HEADER */
+/* HEADER - Mobile First */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 18px 6%;
-    background: rgba(17,14,27,.85);
+    padding: 15px 20px;
+    background: rgba(17,14,27,.95);
     backdrop-filter: blur(10px);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 1000;
+    border-bottom: 2px solid var(--accent);
 }
 
 .logo {
@@ -41,19 +49,87 @@ header {
 }
 
 .logo img {
-    width: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
+    border: 2px solid var(--accent);
+}
+
+.logo h1 {
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 1001;
+}
+
+/* Navigation - Mobile First */
+nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    background: rgba(17,14,27,.98);
+    backdrop-filter: blur(15px);
+    padding: 80px 20px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    transition: left 0.4s ease;
+    z-index: 999;
+    border-right: 2px solid var(--accent);
+    box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+}
+
+nav.active {
+    left: 0;
 }
 
 nav a {
-    margin-left: 18px;
     text-decoration: none;
     color: var(--text);
+    padding: 15px 20px;
     font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    transition: var(--transition);
+    outline: none;
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus,
+nav a.active {
     color: var(--accent-light);
+    background: var(--card);
+    outline: none;
+}
+
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 998;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* HERO */
@@ -61,65 +137,154 @@ nav a:hover {
     text-align: center;
     padding: 50px 20px;
     background: linear-gradient(145deg, #1b1528, #2a1e47);
+    position: relative;
+    overflow: hidden;
+}
+
+.hero h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: var(--text);
+}
+
+.hero p {
+    font-size: 1rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
 }
 
 .hero-img {
-    width: 80%;
-    max-width: 800px;
+    width: 100%;
+    max-width: 600px;
     border-radius: var(--radius);
-    margin-bottom: 20px;
+    margin: 20px auto;
+    display: block;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
 }
 
 /* SECTION HEADERS */
 .genre {
-    padding: 40px 6% 30px;
+    padding: 35px 20px 25px;
 }
 
 .genre h2 {
     margin-bottom: 20px;
-    padding-left: 10px;
+    padding-left: 12px;
     border-left: 4px solid var(--accent);
+    font-size: 1.5rem;
+    color: var(--text);
 }
 
-/* CARD GRID */
+/* CARD CONTAINER */
 .card-container {
     display: grid;
     gap: 18px;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: 1fr;
+    padding: 0;
 }
 
 /* ARTIST CARDS */
 .artist-card {
     background: var(--card);
     border-radius: var(--radius);
-    padding: 14px;
+    padding: 15px;
     text-align: center;
     box-shadow: 0 3px 8px var(--shadow);
     transition: var(--transition);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .artist-card:hover {
     background: var(--card-hover);
     transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--shadow);
 }
 
 .artist-card img {
     width: 100%;
-    height: 180px;
+    max-width: 200px;
+    height: 200px;
     object-fit: cover;
     border-radius: var(--radius);
-    margin-bottom: 10px;
+    margin: 0 auto 12px;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.artist-card img:hover {
+    transform: scale(1.05);
+}
+
+.artist-card h3 {
+    color: var(--accent-light);
+    margin: 10px 0 8px;
+    font-size: 1.2rem;
+}
+
+.artist-card p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
 }
 
 .artist-card p a {
     color: var(--accent-light);
+    text-decoration: none;
 }
 
-/* --- ALBUM GRID FIX --- */
+.artist-card p a:hover {
+    text-decoration: underline;
+}
+
+/* GRID SYSTEM */
+.grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: 1fr;
+}
+
+/* CARDS */
+.card {
+    background: var(--card);
+    padding: 15px;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    box-shadow: 0 3px 8px var(--shadow);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.card:hover {
+    background: var(--card-hover);
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px var(--shadow);
+}
+
+.card img {
+    width: 100%;
+    border-radius: var(--radius);
+    height: 180px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.card h3 {
+    color: var(--accent-light);
+    margin: 10px 0 6px;
+    font-size: 1.1rem;
+}
+
+.card p {
+    color: var(--text-dark);
+    margin: 0 0 8px;
+    font-size: 0.9rem;
+}
+
+/* ALBUMS GRID */
 .albums-grid {
     display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 18px;
+    grid-template-columns: 1fr;
 }
 
 .album {
@@ -128,6 +293,7 @@ nav a:hover {
     padding: 15px;
     border-radius: var(--radius);
     transition: var(--transition);
+    box-shadow: 0 3px 8px var(--shadow);
 }
 
 .album:hover {
@@ -135,17 +301,19 @@ nav a:hover {
     transform: translateY(-3px);
 }
 
-/* Smaller album images */
 .album img {
     width: 100%;
     height: 160px;
     object-fit: cover;
     border-radius: var(--radius);
+    margin-bottom: 10px;
 }
 
 .album-title {
     cursor: pointer;
     color: var(--accent-light);
+    font-weight: 600;
+    margin: 10px 0;
 }
 
 .songs {
@@ -155,11 +323,156 @@ nav a:hover {
 
 .songs p {
     margin: 5px 0;
+    font-size: 0.9rem;
 }
 
-/* MEDIA */
+.album-title.active + .songs {
+    display: block;
+}
+
+/* ALBUM GRID */
+.album-grid img {
+    height: 200px;
+}
+
+/* MUSIC VIDEOS */
+.video-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.video-card {
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.video-date {
+    color: #8affc7;
+    font-size: 0.8rem;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+}
+
+.video-title {
+    margin: 0 0 12px;
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+.video-card img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    border-radius: var(--radius);
+    transition: 0.3s ease;
+}
+
+.video-card img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 0 12px rgba(255,255,255,0.3);
+}
+
+/* TIMELINE */
+.timeline {
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.timeline-item {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.timeline-item::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: -26px;
+    top: 5px;
+}
+
+.timeline-item h4 {
+    margin: 0 0 5px;
+    color: var(--accent-light);
+    font-size: 1rem;
+}
+
+.timeline-item p {
+    margin: 0;
+    color: var(--text-dark);
+    font-size: 0.9rem;
+}
+
+.timeline-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+/* ACCORDION */
+.accordion {
+    background-color: var(--card);
+    color: var(--accent-light);
+    cursor: pointer;
+    padding: 12px 15px;
+    width: 100%;
+    border: none;
+    text-align: center;
+    outline: none;
+    font-size: 1rem;
+    border-radius: var(--radius);
+    transition: var(--transition);
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.accordion:hover {
+    background-color: var(--card-hover);
+}
+
+.accordion::after {
+    content: ' ▼';
+    font-size: 0.8rem;
+}
+
+.accordion.active::after {
+    content: ' ▲';
+}
+
+.panel {
+    padding: 0;
+    display: none;
+    overflow: hidden;
+    background-color: rgba(0,0,0,0.2);
+    border-radius: var(--radius);
+    margin-top: 8px;
+    padding: 15px;
+}
+
+.panel p {
+    margin: 8px 0;
+    line-height: 1.6;
+}
+
+.panel a {
+    color: var(--accent-light);
+    text-decoration: none;
+}
+
+.panel a:hover {
+    text-decoration: underline;
+}
+
+/* MEDIA EMBEDS */
 iframe {
     border-radius: var(--radius);
+    max-width: 100%;
 }
 
 /* EVENTS LIST */
@@ -170,24 +483,29 @@ iframe {
 
 #events li {
     margin: 8px 0;
+    color: var(--text-dark);
 }
 
-/* FAN SUBMISSION */
+/* FAN SUBMISSION FORM */
 form {
     display: flex;
     flex-direction: column;
     max-width: 500px;
-    margin: auto;
+    margin: 20px auto;
 }
 
 form label {
     margin: 10px 0 4px;
+    color: var(--text);
 }
 
-form input, form textarea {
+form input, 
+form textarea {
     padding: 10px;
     border-radius: var(--radius);
-    border: none;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: var(--card);
+    color: var(--text);
     margin-bottom: 10px;
     font-family: "Poppins", sans-serif;
 }
@@ -205,6 +523,7 @@ form button {
 
 form button:hover {
     background: var(--accent-light);
+    transform: translateY(-2px);
 }
 
 /* SOCIAL */
@@ -220,351 +539,447 @@ form button:hover {
 #social ul li a {
     text-decoration: none;
     color: var(--accent-light);
+    transition: var(--transition);
 }
 
 #social ul li a:hover {
     text-decoration: underline;
+    color: var(--text);
 }
 
 /* FOOTER */
 footer {
     text-align: center;
-    padding: 28px 0;
+    padding: 30px 20px;
     margin-top: 40px;
     background: #19142a;
     border-top: 1px solid rgba(255,255,255,.1);
 }
 
-/* RESPONSIVE */
-@media (max-width: 750px) {
-    header {
-        flex-direction: column;
-        text-align: center;
-    }
-
-    nav a {
-        display: inline-block;
-        margin: 8px;
-    }
-
-    .hero-img {
-        width: 95%;
-    }
-}
-
-/* OPEN SONG LIST */
-.album-title.active + .songs {
-    display: block;
-}
-
-/* MUSIC VIDEO GRID */
-.video-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 40px;
-    margin-top: 20px;
-}
-
-.video-card {
-    padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-}
-
-.video-date {
-    color: #9bff83;
-    font-size: 0.85rem;
-    letter-spacing: 1px;
-    margin-bottom: 6px;
-}
-
-.video-title {
-    margin: 0 0 12px;
-    font-size: 1.2rem;
-}
-
-.video-card img {
-    width: 100%;
-    height: 170px;
-    object-fit: cover;
-    border-radius: var(--radius);
-    transition: 0.3s ease;
-}
-
-.video-card img:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 12px rgba(255,255,255,0.3);
-}
-/* GLOBAL THEME */
-:root {
-    --bg: #0f0b16;
-    --bg2: #171223;
-    --accent: #7d4bff;
-    --accent-light: #a67fff;
-    --text: #eae5ff;
-    --text-dark: #cfc9e5;
-    --card: rgba(255,255,255,0.07);
-    --card-hover: rgba(255,255,255,0.12);
-    --shadow: rgba(0,0,0,.35);
-    --radius: 14px;
-    --transition: 0.3s ease;
-}
-
-/* BODY */
-body {
-    margin: 0;
-    font-family: "Poppins", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-}
-
-/* HEADER */
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 18px 6%;
-    background: rgba(17,14,27,.85);
-    backdrop-filter: blur(10px);
-    position: sticky;
-    top: 0;
-    z-index: 10;
-}
-
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo img {
-    width: 50px;
-    border-radius: 50%;
-}
-
-nav a {
-    margin-left: 18px;
-    text-decoration: none;
-    color: var(--text);
-    font-weight: 500;
-}
-
-nav a:hover {
+footer h3 {
     color: var(--accent-light);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
 }
 
-/* HERO */
-.hero {
-    text-align: center;
-    padding: 50px 20px;
-    background: linear-gradient(145deg, #1b1528, #2a1e47);
-}
-
-.hero-img {
-    width: 80%;
-    max-width: 800px;
-    border-radius: var(--radius);
-}
-
-/* SECTION HEADERS */
-.genre {
-    padding: 40px 6% 30px;
-}
-
-.genre h2 {
-    margin-bottom: 20px;
-    padding-left: 10px;
-    border-left: 4px solid var(--accent);
-}
-
-/* GRID SYSTEM */
-.grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-}
-
-/* CARDS */
-.card {
-    background: var(--card);
-    padding: 12px;
-    border-radius: var(--radius);
-    transition: var(--transition);
-    box-shadow: 0 3px 8px var(--shadow);
-}
-
-.card:hover {
-    background: var(--card-hover);
-    transform: translateY(-4px);
-}
-
-.card img {
-    width: 100%;
-    border-radius: var(--radius);
-    height: 200px;
-    object-fit: cover;
-}
-
-/* CARD TEXT */
-.card h3 {
-    color: var(--accent-light);
-    margin: 10px 0 6px;
-    font-size: 1.1rem;
-}
-
-.card p {
+footer p {
     color: var(--text-dark);
-    margin: 0 0 8px;
-}
-
-/* ALBUMS */
-.album-grid img {
-    height: 260px;
-}
-
-/* MUSIC VIDEOS */
-.video-date {
-    color: #8affc7;
-    font-size: 0.8rem;
     margin: 5px 0;
+    font-size: 0.9rem;
 }
 
-/* TIMELINE EVENTS */
-.timeline {
-    border-left: 3px solid var(--accent);
-    padding-left: 20px;
+/* SCROLLBAR */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-.timeline-item {
-    margin-bottom: 20px;
-    position: relative;
+::-webkit-scrollbar-track {
+    background: var(--bg2);
 }
 
-.timeline-item::before {
-    content: "";
-    width: 12px;
-    height: 12px;
+::-webkit-scrollbar-thumb {
     background: var(--accent);
-    border-radius: 50%;
-    position: absolute;
-    left: -28px;
-    top: 5px;
+    border-radius: 4px;
 }
 
-.timeline-item h4 {
-    margin: 0;
-    color: var(--accent-light);
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-light);
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-header {
-flex-direction: column;
-text-align: center;
-}
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
 
-
-nav {
-justify-content: center;
-gap: 10px;
-}
-
-
-.hero {
-padding: 70px 20px;
-}
-
-
-.hero h2 {
-font-size: 1.8rem;
-}
-
-
-.hero p {
-font-size: 1rem;
-}
-}
-
-
-@media (max-width: 480px) {
-.logo img {
-width: 40px;
-height: 40px;
-}
-
-
-nav {
-flex-direction: column;
-gap: 5px;
-}
-
-
-.hero h2 {
-font-size: 1.5rem;
-}
-}
-
-.timeline-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-}
-
-@media(max-width: 800px) {
-    .timeline-container {
-        grid-template-columns: 1fr;
+/* SMALL MOBILE (320px - 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+    header {
+        padding: 12px 15px;
+    }
+    
+    .logo img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .hero {
+        padding: 40px 15px;
+    }
+    
+    .hero h2 {
+        font-size: 1.4rem;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+    }
+    
+    .genre {
+        padding: 30px 15px 20px;
+    }
+    
+    .genre h2 {
+        font-size: 1.3rem;
+    }
+    
+    .artist-card img {
+        max-width: 160px;
+        height: 160px;
+    }
+    
+    .card img {
+        height: 150px;
     }
 }
-/* Accordion Button */
-.accordion {
-    background-color: var(--card);
-    color: var(--accent-light);
-    cursor: pointer;
-    padding: 10px 15px;
-    width: 100%;
-    border: none;
-    text-align: center;
-    outline: none;
-    font-size: 1rem;
-    border-radius: var(--radius);
-    transition: var(--transition);
+
+/* MOBILE (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .logo img {
+        width: 42px;
+        height: 42px;
+    }
+    
+    .logo h1 {
+        font-size: 1.15rem;
+    }
+    
+    .hero {
+        padding: 55px 20px;
+    }
+    
+    .hero h2 {
+        font-size: 1.7rem;
+    }
+    
+    .card-container,
+    .albums-grid,
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
-.accordion:hover {
-    background-color: var(--card-hover);
+/* TABLET (768px - 1023px) */
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+    
+    nav {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        flex-direction: row;
+        gap: 5px;
+        background: transparent;
+        border-right: none;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+    
+    nav a {
+        padding: 10px 18px;
+        border-bottom: none;
+        border-radius: 20px;
+    }
+    
+    nav a:hover,
+    nav a:focus {
+        background: var(--card);
+    }
+    
+    header {
+        padding: 18px 40px;
+    }
+    
+    .logo img {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+    
+    .hero {
+        padding: 70px 40px;
+    }
+    
+    .hero h2 {
+        font-size: 2.2rem;
+    }
+    
+    .hero p {
+        font-size: 1.15rem;
+    }
+    
+    .hero-img {
+        max-width: 700px;
+    }
+    
+    .genre {
+        padding: 45px 40px 35px;
+    }
+    
+    .genre h2 {
+        font-size: 1.8rem;
+    }
+    
+    .card-container,
+    .albums-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+    }
+    
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .artist-card img {
+        max-width: 220px;
+        height: 220px;
+    }
+    
+    .card img {
+        height: 200px;
+    }
+    
+    .album img {
+        height: 180px;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 30px;
+    }
+    
+    .video-card img {
+        height: 200px;
+    }
+    
+    .timeline-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+    }
 }
 
-/* Panel for hidden content */
-.panel {
-    padding: 0 10px;
-    display: none;
-    overflow: hidden;
-    background-color: var(--card);
-    border-radius: var(--radius);
-    margin-top: 8px;
-}
-/* BAND MEMBERS PHOTOS */
-.artist-card img {
-    width: 200px;  /* Increase width */
-    height: 200px; /* Increase height */
-    object-fit: cover; /* Keeps image proportions without stretching */
-    border-radius: 10px; /* Optional: rounded corners */
-    transition: transform 0.3s ease; /* Optional: hover effect */
+/* DESKTOP (1024px - 1439px) */
+@media (min-width: 1024px) {
+    header {
+        padding: 20px 60px;
+    }
+    
+    .logo img {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .logo h1 {
+        font-size: 1.7rem;
+    }
+    
+    nav {
+        gap: 10px;
+    }
+    
+    nav a {
+        padding: 10px 22px;
+        font-size: 1rem;
+    }
+    
+    .hero {
+        padding: 90px 60px;
+    }
+    
+    .hero h2 {
+        font-size: 2.5rem;
+    }
+    
+    .hero p {
+        font-size: 1.25rem;
+    }
+    
+    .hero-img {
+        max-width: 800px;
+    }
+    
+    .genre {
+        padding: 55px 60px 45px;
+    }
+    
+    .genre h2 {
+        font-size: 2rem;
+    }
+    
+    .card-container,
+    .albums-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 25px;
+    }
+    
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+    }
+    
+    .artist-card img {
+        max-width: 240px;
+        height: 240px;
+    }
+    
+    .card img {
+        height: 220px;
+    }
+    
+    .album-grid img {
+        height: 260px;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 35px;
+    }
+    
+    .video-card img {
+        height: 220px;
+    }
+    
+    form {
+        max-width: 600px;
+    }
 }
 
-.artist-card img:hover {
-    transform: scale(1.05); /* Optional: slight zoom on hover */
-}
-nav a {
-    text-decoration: none;
-    color: #fff;
-    padding: 10px 15px;
-    font-weight: bold;
-    outline: none;
+/* LARGE DESKTOP (1440px+) */
+@media (min-width: 1440px) {
+    header {
+        padding: 22px 80px;
+    }
+    
+    .logo img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo h1 {
+        font-size: 1.9rem;
+    }
+    
+    nav {
+        gap: 15px;
+    }
+    
+    nav a {
+        padding: 12px 24px;
+        font-size: 1.05rem;
+    }
+    
+    .hero {
+        padding: 100px 80px;
+    }
+    
+    .hero h2 {
+        font-size: 3rem;
+    }
+    
+    .hero p {
+        font-size: 1.35rem;
+    }
+    
+    .hero-img {
+        max-width: 900px;
+    }
+    
+    .genre {
+        padding: 65px 80px 55px;
+    }
+    
+    .genre h2 {
+        font-size: 2.2rem;
+    }
+    
+    .card-container,
+    .albums-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 30px;
+    }
+    
+    .grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+    }
+    
+    .artist-card img {
+        max-width: 260px;
+        height: 260px;
+    }
+    
+    .card img {
+        height: 240px;
+    }
+    
+    .video-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 40px;
+    }
+    
+    .video-card img {
+        height: 240px;
+    }
+    
+    footer {
+        padding: 40px 80px;
+    }
 }
 
-nav a:hover,
-nav a:focus {
-    color: #7d4bff;
-    outline: none;
+/* EXTRA SMALL DEVICES (Under 320px) */
+@media (max-width: 319px) {
+    header {
+        padding: 10px 12px;
+    }
+    
+    .logo img {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .logo h1 {
+        font-size: 0.9rem;
+    }
+    
+    .menu-toggle {
+        font-size: 1.3rem;
+    }
+    
+    .hero {
+        padding: 35px 12px;
+    }
+    
+    .hero h2 {
+        font-size: 1.2rem;
+    }
+    
+    .hero p {
+        font-size: 0.85rem;
+    }
+    
+    .genre h2 {
+        font-size: 1.2rem;
+    }
+    
+    .artist-card img {
+        max-width: 140px;
+        height: 140px;
+    }
+    
+    .card img {
+        height: 140px;
+    }
 }
-
