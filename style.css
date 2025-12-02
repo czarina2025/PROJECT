@@ -16,22 +16,30 @@
 }
 
 /* =========================================================
-   GLOBAL
+   GLOBAL RESET
 ========================================================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
     background: var(--bg);
     color: var(--text);
-    font-family: "Poppins", sans-serif;
+    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     margin: 0;
+    overflow-x: hidden;
 }
 
 img {
     max-width: 100%;
     border-radius: var(--radius);
+    display: block;
 }
 
 /* =========================================================
-   HEADER + NAV
+   HEADER + NAV - MOBILE FIRST
 ========================================================= */
 
 @keyframes headerGradient {
@@ -44,26 +52,28 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 6%;
+    padding: 15px 20px;
     background: linear-gradient(120deg, #0f0b16, #171223, #2a1e47);
     background-size: 200% 200%;
     animation: headerGradient 10s ease infinite;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
     position: sticky;
     top: 0;
-    z-index: 20;
+    z-index: 1000;
     border-bottom: 2px solid var(--accent);
 }
 
-/* Logo floating effect */
+/* Logo */
 .logo {
     display: flex;
     align-items: center;
     gap: 10px;
+    z-index: 1001;
 }
 
 .logo img {
-    width: 60px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     border: 2px solid var(--accent);
     animation: floatLogo 4s ease-in-out infinite;
@@ -74,12 +84,44 @@ header {
     50% { transform: translateY(-5px) rotate(3deg); }
 }
 
-/* NAV links */
+.logo h1 {
+    font-size: 1.1rem;
+    color: var(--text);
+}
+
+/* Mobile Menu Toggle */
+.menu-toggle {
+    display: block;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-size: 1.6rem;
+    cursor: pointer;
+    padding: 8px;
+    z-index: 1001;
+}
+
+/* NAV - Mobile First (Sidebar) */
 nav {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 280px;
+    height: 100vh;
+    background: rgba(17,14,27,.98);
+    backdrop-filter: blur(15px);
+    padding: 80px 20px 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 40px;
+    flex-direction: column;
+    gap: 0;
+    transition: left 0.4s ease;
+    z-index: 999;
+    border-right: 2px solid var(--accent);
+    box-shadow: 2px 0 20px rgba(0,0,0,0.5);
+}
+
+nav.active {
+    left: 0;
 }
 
 nav a,
@@ -88,32 +130,43 @@ nav .nav-link {
     color: var(--text);
     text-decoration: none;
     font-weight: 600;
-    font-size: 17px;
-    padding: 8px 0;
-    transition: .3s ease;
+    font-size: 1rem;
+    padding: 15px 20px;
+    transition: var(--transition);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 nav a::after {
-    content: "";
-    position: absolute;
-    bottom: -3px;
-    left: 0;
-    width: 0%;
-    height: 2px;
-    background: var(--accent);
-    transition: .3s ease;
+    display: none; /* Hide underline animation on mobile */
 }
 
-nav a:hover {
+nav a:hover,
+nav .nav-link:hover {
     color: var(--accent-light);
+    background: var(--card);
 }
 
-nav a:hover::after {
+/* Menu Overlay */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 998;
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
 }
 
 /* ===============================
-   DROPDOWN MENU (Unified Version)
+   DROPDOWN MENU - Mobile Adjusted
 ================================== */
 
 .dropdown {
@@ -124,36 +177,41 @@ nav a:hover::after {
     background: none;
     border: none;
     color: var(--text);
-    font-size: 17px;
+    font-size: 1rem;
     font-weight: 600;
-    padding: 8px 0;
+    padding: 15px 20px;
     cursor: pointer;
+    width: 100%;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
 }
 
 .dropdown-content {
     display: none;
-    position: absolute;
-    background: #1c1433;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    min-width: 150px;
-    margin-top: 10px;
-    box-shadow: 0 4px 12px var(--shadow);
-    z-index: 999;
+    position: static;
+    background: rgba(0,0,0,0.3);
+    border: none;
+    border-radius: 0;
+    min-width: auto;
+    margin: 0;
+    box-shadow: none;
 }
 
 .dropdown-content a {
-    padding: 10px 15px;
+    padding: 12px 20px 12px 40px;
     display: block;
     text-decoration: none;
-    color: var(--text);
+    color: var(--text-dark);
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
 }
 
 .dropdown-content a:hover {
-    background: var(--accent);
+    background: var(--card);
+    color: var(--accent-light);
 }
 
-.dropdown:hover .dropdown-content {
+.dropdown.active .dropdown-content {
     display: block;
 }
 
@@ -173,7 +231,7 @@ nav a:hover::after {
 
 .hero {
     text-align: center;
-    padding: 100px 20px;
+    padding: 60px 20px;
     background: linear-gradient(rgba(17,14,27,0.6), rgba(17,14,27,0.6)),
                 url("photos/hero-bg.jpg") center/cover no-repeat;
     position: relative;
@@ -191,7 +249,8 @@ nav a:hover::after {
     animation: moveGradient 8s linear infinite;
 }
 
-.hero h2, .hero p {
+.hero h2, 
+.hero p {
     position: relative;
     z-index: 2;
     opacity: 0;
@@ -199,12 +258,13 @@ nav a:hover::after {
 }
 
 .hero h2 {
-    font-size: 2.8rem;
+    font-size: 1.8rem;
+    margin-bottom: 15px;
     animation-delay: 0.3s;
 }
 
 .hero p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     animation-delay: 0.6s;
 }
 
@@ -213,24 +273,26 @@ nav a:hover::after {
 ========================================================= */
 .genre,
 .section-title {
-    padding: 40px 6% 20px;
+    padding: 35px 20px 20px;
 }
 
 .genre h2,
 .section-title {
     border-left: 4px solid var(--accent);
-    padding-left: 8px;
-    font-size: 1.8rem;
+    padding-left: 10px;
+    font-size: 1.5rem;
+    color: var(--text);
 }
 
 /* =========================================================
-   GRID & CARD LAYOUTS
+   GRID & CARD LAYOUTS - Mobile First
 ========================================================= */
 .card-container,
 .video-grid {
     display: grid;
     gap: 18px;
-    grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+    grid-template-columns: 1fr;
+    padding: 0 20px;
 }
 
 /* =========================================================
@@ -244,63 +306,76 @@ nav a:hover::after {
     padding: 16px;
     transition: var(--transition);
     box-shadow: 0 3px 8px var(--shadow);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .artist-card:hover,
 .member-card:hover {
     background: var(--card-hover);
     transform: translateY(-3px);
+    box-shadow: 0 8px 20px var(--shadow);
 }
 
 .artist-card img {
+    width: 100%;
     height: 180px;
     object-fit: cover;
+    margin-bottom: 10px;
 }
 
 .artist-card h3 {
     color: var(--accent-light);
     margin-top: 8px;
     font-size: 1.1rem;
+    text-align: center;
 }
 
-/* Member layout */
+.artist-card p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Member Card */
 .member-card {
     display: flex;
-    gap: 25px;
-    margin: 25px 6%;
+    flex-direction: column;
+    gap: 15px;
+    margin: 20px 20px;
+    text-align: center;
 }
 
 .member-card img {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+    object-fit: cover;
 }
 
 .member-card h3 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     color: var(--accent-light);
+    margin-bottom: 10px;
 }
 
 .member-card ul {
     padding-left: 20px;
     color: var(--text-dark);
-}
-
-@media (max-width: 850px) {
-    .member-card {
-        flex-direction: column;
-        text-align: center;
-    }
+    text-align: left;
+    list-style-position: inside;
 }
 
 /* =========================================================
    ALBUM BOXES (Collapsible)
 ========================================================= */
 .album-box {
-    margin: 20px 6%;
+    margin: 20px 20px;
     background: var(--card);
     padding: 14px;
     border-radius: var(--radius);
     transition: var(--transition);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .album-box:hover {
@@ -308,22 +383,25 @@ nav a:hover::after {
 }
 
 .album-box summary {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
 .album-box summary img {
-    width: 90px;
-    height: 90px;
+    width: 80px;
+    height: 80px;
     object-fit: cover;
+    flex-shrink: 0;
 }
 
 .album-box ul {
     padding-left: 20px;
     margin-top: 10px;
+    color: var(--text-dark);
 }
 
 /* =========================================================
@@ -335,7 +413,10 @@ nav a:hover::after {
     border-radius: var(--radius);
     text-align: center;
     color: var(--accent-light);
+    text-decoration: none;
     transition: var(--transition);
+    display: block;
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .video-grid a:hover {
@@ -343,28 +424,49 @@ nav a:hover::after {
     transform: translateY(-3px);
 }
 
+.video-grid img {
+    width: 100%;
+    height: 170px;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
 /* =========================================================
    TIMELINE
 ========================================================= */
 .timeline {
-    margin: 25px 6%;
+    margin: 20px 20px;
     padding: 20px;
     background: var(--card);
     border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.timeline h3 {
+    color: var(--accent-light);
+    margin-bottom: 15px;
 }
 
 .timeline li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    color: var(--text-dark);
+    line-height: 1.6;
 }
 
 /* =========================================================
    FAN MESSAGE FORM
 ========================================================= */
 .fan-box {
-    margin: 25px 6%;
+    margin: 20px 20px;
     background: var(--card);
     padding: 20px;
     border-radius: var(--radius);
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.fan-box h3 {
+    color: var(--accent-light);
+    margin-bottom: 15px;
 }
 
 .fan-box form {
@@ -380,6 +482,7 @@ nav a:hover::after {
     border: 1px solid #271c3e;
     border-radius: var(--radius);
     color: var(--text);
+    font-family: inherit;
 }
 
 .fan-box button {
@@ -389,10 +492,13 @@ nav a:hover::after {
     border: none;
     border-radius: var(--radius);
     cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
 }
 
 .fan-box button:hover {
     background: var(--accent-light);
+    transform: translateY(-2px);
 }
 
 /* =========================================================
@@ -401,25 +507,27 @@ nav a:hover::after {
 .feed-title {
     text-align: center;
     margin-top: 35px;
-    font-size: 2.4rem;
+    font-size: 1.8rem;
     color: var(--accent-light);
+    padding: 0 20px;
 }
 
 .feed-container {
-    width: 70%;
-    margin: 50px auto;
+    width: 90%;
+    margin: 40px auto;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    gap: 20px;
 }
 
 .post {
     background: var(--card);
-    padding: 20px;
+    padding: 18px;
     border-radius: var(--radius);
     box-shadow: 0 4px 12px var(--shadow);
     transition: var(--transition);
     border-left: 4px solid var(--accent);
+    border: 1px solid rgba(255,255,255,0.05);
 }
 
 .post:hover {
@@ -429,26 +537,29 @@ nav a:hover::after {
 
 .post-header {
     display: flex;
-    gap: 14px;
+    gap: 12px;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .post-header img {
-    width: 55px;
-    height: 55px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--accent);
 }
 
-.post p {
-    margin-top: 8px;
+.post-header h3 {
+    color: var(--accent-light);
+    font-size: 1rem;
 }
 
-@media (max-width: 850px) {
-    .feed-container {
-        width: 90%;
-    }
+.post p {
+    margin-top: 8px;
+    color: var(--text-dark);
+    line-height: 1.6;
+    font-size: 0.9rem;
 }
 
 /* =========================================================
@@ -456,56 +567,524 @@ nav a:hover::after {
 ========================================================= */
 footer {
     text-align: center;
-    padding: 28px 0;
+    padding: 30px 20px;
     background: #19142a;
     border-top: 1px solid rgba(255,255,255,.1);
     margin-top: 40px;
 }
 
-/* RESPONSIVE */
-@media (max-width: 768px) {
-header {
-flex-direction: column;
-text-align: center;
+footer h3 {
+    color: var(--accent-light);
+    margin-bottom: 10px;
+    font-size: 1.3rem;
 }
 
-
-nav {
-justify-content: center;
-gap: 10px;
+footer p {
+    color: var(--text-dark);
+    font-size: 0.9rem;
+    margin: 5px 0;
 }
 
-
-.hero {
-padding: 70px 20px;
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+::-webkit-scrollbar {
+    width: 8px;
 }
 
-
-.hero h2 {
-font-size: 1.8rem;
+::-webkit-scrollbar-track {
+    background: var(--bg2);
 }
 
-
-.hero p {
-font-size: 1rem;
-}
-}
-
-
-@media (max-width: 480px) {
-.logo img {
-width: 40px;
-height: 40px;
+::-webkit-scrollbar-thumb {
+    background: var(--accent);
+    border-radius: 4px;
 }
 
-
-nav {
-flex-direction: column;
-gap: 5px;
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent-light);
 }
 
+/* ============================================
+   RESPONSIVE BREAKPOINTS
+   ============================================ */
 
-.hero h2 {
-font-size: 1.5rem;
+/* SMALL MOBILE (320px - 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+    header {
+        padding: 12px 15px;
+    }
+    
+    .logo img {
+        width: 38px;
+        height: 38px;
+    }
+    
+    .logo h1 {
+        font-size: 1rem;
+    }
+    
+    .hero {
+        padding: 50px 15px;
+    }
+    
+    .hero h2 {
+        font-size: 1.5rem;
+    }
+    
+    .hero p {
+        font-size: 0.9rem;
+    }
+    
+    .genre h2 {
+        font-size: 1.3rem;
+    }
+    
+    .artist-card img {
+        height: 160px;
+    }
+    
+    .member-card img {
+        width: 150px;
+        height: 150px;
+    }
+    
+    .feed-title {
+        font-size: 1.5rem;
+    }
+    
+    .post-header img {
+        width: 45px;
+        height: 45px;
+    }
 }
+
+/* MOBILE (481px - 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+    .logo img {
+        width: 48px;
+        height: 48px;
+    }
+    
+    .logo h1 {
+        font-size: 1.15rem;
+    }
+    
+    .hero h2 {
+        font-size: 1.9rem;
+    }
+    
+    .hero p {
+        font-size: 1.05rem;
+    }
+    
+    .card-container,
+    .video-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .feed-title {
+        font-size: 2rem;
+    }
+}
+
+/* TABLET (768px - 1023px) */
+@media (min-width: 768px) {
+    .menu-toggle {
+        display: none;
+    }
+    
+    nav {
+        position: static;
+        width: auto;
+        height: auto;
+        padding: 0;
+        flex-direction: row;
+        gap: 25px;
+        background: transparent;
+        border-right: none;
+        box-shadow: none;
+        backdrop-filter: none;
+    }
+    
+    nav a,
+    nav .nav-link {
+        padding: 8px 0;
+        border-bottom: none;
+    }
+    
+    nav a::after {
+        display: block;
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0%;
+        height: 2px;
+        background: var(--accent);
+        transition: .3s ease;
+    }
+    
+    nav a:hover {
+        background: transparent;
+    }
+    
+    nav a:hover::after {
+        width: 100%;
+    }
+    
+    .dropdown {
+        position: relative;
+    }
+    
+    .dropbtn {
+        padding: 8px 0;
+        width: auto;
+        text-align: center;
+        border-bottom: none;
+    }
+    
+    .dropdown-content {
+        position: absolute;
+        background: #1c1433;
+        border: 1px solid var(--accent);
+        border-radius: 6px;
+        min-width: 150px;
+        margin-top: 10px;
+        box-shadow: 0 4px 12px var(--shadow);
+    }
+    
+    .dropdown-content a {
+        padding: 10px 15px;
+        font-size: 0.95rem;
+        border-bottom: none;
+    }
+    
+    .dropdown-content a:hover {
+        background: var(--accent);
+    }
+    
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+    
+    header {
+        padding: 18px 40px;
+    }
+    
+    .logo img {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .logo h1 {
+        font-size: 1.4rem;
+    }
+    
+    .hero {
+        padding: 85px 40px;
+    }
+    
+    .hero h2 {
+        font-size: 2.4rem;
+    }
+    
+    .hero p {
+        font-size: 1.15rem;
+    }
+    
+    .genre,
+    .section-title {
+        padding: 40px 40px 25px;
+    }
+    
+    .genre h2,
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    .card-container,
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        padding: 0 40px;
+        gap: 20px;
+    }
+    
+    .artist-card img {
+        height: 200px;
+    }
+    
+    .member-card {
+        flex-direction: row;
+        gap: 25px;
+        margin: 25px 40px;
+        text-align: left;
+    }
+    
+    .member-card img {
+        width: 200px;
+        height: 200px;
+        margin: 0;
+    }
+    
+    .member-card ul {
+        text-align: left;
+    }
+    
+    .album-box {
+        margin: 25px 40px;
+    }
+    
+    .album-box summary {
+        font-size: 1.3rem;
+        gap: 14px;
+    }
+    
+    .album-box summary img {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .timeline,
+    .fan-box {
+        margin: 25px 40px;
+    }
+    
+    .feed-title {
+        font-size: 2.4rem;
+    }
+    
+    .feed-container {
+        width: 75%;
+        gap: 25px;
+    }
+    
+    .post {
+        padding: 20px;
+    }
+    
+    .post-header img {
+        width: 55px;
+        height: 55px;
+    }
+    
+    .post-header h3 {
+        font-size: 1.1rem;
+    }
+    
+    .post p {
+        font-size: 0.95rem;
+    }
+}
+
+/* DESKTOP (1024px - 1439px) */
+@media (min-width: 1024px) {
+    header {
+        padding: 20px 60px;
+    }
+    
+    .logo img {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .logo h1 {
+        font-size: 1.6rem;
+    }
+    
+    nav {
+        gap: 40px;
+    }
+    
+    nav a,
+    nav .nav-link {
+        font-size: 17px;
+    }
+    
+    .hero {
+        padding: 100px 60px;
+    }
+    
+    .hero h2 {
+        font-size: 2.8rem;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+    }
+    
+    .genre,
+    .section-title {
+        padding: 45px 60px 30px;
+    }
+    
+    .genre h2,
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .card-container,
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        padding: 0 60px;
+        gap: 25px;
+    }
+    
+    .artist-card img {
+        height: 220px;
+    }
+    
+    .member-card {
+        margin: 30px 60px;
+        gap: 30px;
+    }
+    
+    .member-card img {
+        width: 220px;
+        height: 220px;
+    }
+    
+    .member-card h3 {
+        font-size: 1.5rem;
+    }
+    
+    .album-box,
+    .timeline,
+    .fan-box {
+        margin: 30px 60px;
+    }
+    
+    .feed-container {
+        width: 70%;
+        margin: 50px auto;
+    }
+    
+    .video-grid img {
+        height: 200px;
+    }
+}
+
+/* LARGE DESKTOP (1440px+) */
+@media (min-width: 1440px) {
+    header {
+        padding: 22px 80px;
+    }
+    
+    .logo img {
+        width: 65px;
+        height: 65px;
+    }
+    
+    .logo h1 {
+        font-size: 1.8rem;
+    }
+    
+    .hero {
+        padding: 110px 80px;
+    }
+    
+    .hero h2 {
+        font-size: 3.2rem;
+    }
+    
+    .hero p {
+        font-size: 1.3rem;
+    }
+    
+    .genre,
+    .section-title {
+        padding: 50px 80px 35px;
+    }
+    
+    .genre h2,
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    .card-container,
+    .video-grid {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        padding: 0 80px;
+        gap: 30px;
+    }
+    
+    .artist-card img {
+        height: 240px;
+    }
+    
+    .member-card {
+        margin: 35px 80px;
+    }
+    
+    .member-card img {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .album-box,
+    .timeline,
+    .fan-box {
+        margin: 35px 80px;
+    }
+    
+    .feed-container {
+        width: 60%;
+    }
+    
+    .video-grid img {
+        height: 220px;
+    }
+    
+    footer {
+        padding: 40px 80px;
+    }
+}
+
+/* EXTRA SMALL DEVICES (Under 320px) */
+@media (max-width: 319px) {
+    header {
+        padding: 10px 12px;
+    }
+    
+    .logo img {
+        width: 35px;
+        height: 35px;
+    }
+    
+    .logo h1 {
+        font-size: 0.9rem;
+    }
+    
+    .menu-toggle {
+        font-size: 1.4rem;
+    }
+    
+    .hero {
+        padding: 40px 12px;
+    }
+    
+    .hero h2 {
+        font-size: 1.3rem;
+    }
+    
+    .hero p {
+        font-size: 0.85rem;
+    }
+    
+    .genre h2 {
+        font-size: 1.2rem;
+    }
+    
+    .artist-card img {
+        height: 140px;
+    }
+    
+    .member-card img {
+        width: 130px;
+        height: 130px;
+    }
+    
+    .feed-title {
+        font-size: 1.4rem;
+    }
 }
