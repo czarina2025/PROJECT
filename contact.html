@@ -280,11 +280,16 @@
             transform: translateY(-5px) rotate(5deg);
         }
         
-        /* Map Section */
+        /* Revised Map Section - Integrated with your theme */
         .map-section {
             padding: 40px 6%;
             max-width: 1400px;
             margin: 0 auto;
+            background: linear-gradient(135deg, rgba(15, 12, 41, 0.9) 0%, rgba(26, 26, 46, 0.9) 50%, rgba(22, 33, 62, 0.9) 100%);
+            border-radius: var(--radius);
+            margin-top: 40px;
+            border: 1px solid rgba(125, 75, 255, 0.2);
+            box-shadow: 0 8px 25px var(--shadow);
         }
         
         .map-section h2 {
@@ -300,42 +305,240 @@
         
         .map-section h2 i {
             font-size: 1.5rem;
+            color: #8a2be2;
         }
         
-        .map-container {
-            background: var(--card);
-            border-radius: var(--radius);
-            padding: 20px;
-            box-shadow: 0 8px 25px var(--shadow);
-            border: 1px solid rgba(125, 75, 255, 0.2);
-            height: 400px;
+        .map-container-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            align-items: stretch;
+        }
+        
+        .map-column {
+            flex: 1.2;
+            min-width: 300px;
+        }
+        
+        .map-frame {
+            border-radius: 12px;
             overflow: hidden;
-            position: relative;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            height: 100%;
+            border: 1px solid #333;
         }
         
-        .map-placeholder {
+        .map-frame iframe {
+            border: 0;
+            min-height: 400px;
+            display: block;
+            filter: grayscale(20%) contrast(110%);
             width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, #1c1433, #271c3e);
-            border-radius: var(--radius);
+        }
+        
+        .map-info-column {
+            flex: 1;
+            min-width: 300px;
+            background: rgba(30, 30, 46, 0.8);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
             display: flex;
             flex-direction: column;
+            border: 1px solid #444;
+            backdrop-filter: blur(10px);
+        }
+        
+        .map-location-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #ffffff;
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+        
+        .map-location-header h3 i {
+            color: #ff6b8b;
+        }
+        
+        .map-location-header p {
+            color: #b0b0b0;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        
+        .map-info-card {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: rgba(40, 40, 60, 0.6);
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        
+        .map-coordinates-card {
+            border-left-color: #8a2be2;
+        }
+        
+        .map-about-card {
+            border-left-color: #ff6b8b;
+        }
+        
+        .map-info-card h4 {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .map-coordinates-card h4 i {
+            color: #6cb2eb;
+        }
+        
+        .map-about-card h4 i {
+            color: #20c997;
+        }
+        
+        .coordinate-display {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .coordinate-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .coordinate-row i {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .coordinate-value {
+            font-family: 'Courier New', monospace;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #6cb2eb;
+            border: 1px solid #444;
+        }
+        
+        .coordinate-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+        
+        .map-button-container {
+            margin-top: auto;
+        }
+        
+        .map-button {
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            color: var(--text-dark);
+            gap: 12px;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #8a2be2 0%, #6a11cb 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(138, 43, 226, 0.4);
+            width: 100%;
             text-align: center;
-            padding: 20px;
+            border: none;
+            font-size: 1rem;
         }
         
-        .map-placeholder i {
-            font-size: 4rem;
-            color: var(--accent);
-            margin-bottom: 20px;
+        .map-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 43, 226, 0.6);
+            background: linear-gradient(135deg, #9b30ff 0%, #7a1dcb 100%);
         }
         
-        .map-placeholder h3 {
-            color: var(--accent-light);
-            margin-bottom: 10px;
+        .button-note {
+            color: #888;
+            font-size: 0.85rem;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .getting-here-section {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: rgba(30, 30, 46, 0.8);
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+        }
+        
+        .getting-here-section h4 {
+            color: #ffffff;
+            font-size: 1.2rem;
+            margin-top: 0;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .getting-here-section h4 i {
+            color: #ffcc00;
+        }
+        
+        .transport-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .transport-option {
+            flex: 1;
+            min-width: 200px;
+            padding: 1rem;
+            background: rgba(40, 40, 60, 0.6);
+            border-radius: 8px;
+        }
+        
+        .transport-option h5 {
+            color: #ffffff;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .transport-option .fa-car {
+            color: #ff6b8b;
+        }
+        
+        .transport-option .fa-bus {
+            color: #ffcc00;
+        }
+        
+        .transport-option .fa-plane {
+            color: #6cb2eb;
+        }
+        
+        .transport-option p {
+            color: #b0b0b0;
+            font-size: 0.9rem;
+            margin: 0;
+            line-height: 1.5;
         }
         
         /* FAQ Section */
@@ -412,7 +615,24 @@
             max-height: 300px;
         }
         
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .fa-location-dot {
+            animation: pulse 2s infinite;
+        }
+        
         /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .map-container-wrapper {
+                flex-direction: column;
+            }
+        }
+        
         @media (max-width: 768px) {
             .contact-hero h1 {
                 font-size: 2.5rem;
@@ -425,6 +645,10 @@
             .form-section,
             .info-section {
                 padding: 20px;
+            }
+            
+            .transport-options {
+                flex-direction: column;
             }
         }
         
@@ -568,22 +792,16 @@
         </section>
     </div>
 
-<!-- Map Section -->
-<section class="map-section" style="padding: 2rem 0; background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-        <h2 style="display: flex; align-items: center; gap: 12px; color: #2c3e50; font-size: 2rem; margin-bottom: 2rem;">
-            <i class="fas fa-map-marked-alt" style="color: #3498db;"></i> Find Our Location
-        </h2>
+    <!-- Revised Map Section -->
+    <section class="map-section">
+        <h2><i class="fas fa-map-marked-alt"></i> Find Our Studio</h2>
         
-        <div style="display: flex; flex-wrap: wrap; gap: 30px; align-items: stretch;">
+        <div class="map-container-wrapper">
             <!-- Map Column -->
-            <div style="flex: 1.2; min-width: 300px;">
-                <div style="border-radius: 12px; overflow: hidden; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12); height: 100%;">
+            <div class="map-column">
+                <div class="map-frame">
                     <iframe 
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d489198.2173322061!2d120.58991615000001!3d16.3960013!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3391a16879def13f%3A0x8edef534be3a75c0!2sBaguio%2C%20Benguet!5e0!3m2!1sen!2sph!4v1742388181447!5m2!1sen!2sph" 
-                        width="100%" 
-                        height="100%" 
-                        style="border: 0; min-height: 400px; display: block;" 
                         allowfullscreen="" 
                         loading="lazy" 
                         referrerpolicy="no-referrer-when-downgrade"
@@ -593,81 +811,65 @@
             </div>
             
             <!-- Info Column -->
-            <div style="flex: 1; min-width: 300px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08); display: flex; flex-direction: column;">
-                <div style="margin-bottom: 1.5rem;">
-                    <h3 style="display: flex; align-items: center; gap: 10px; color: #2c3e50; font-size: 1.5rem; margin-top: 0; margin-bottom: 1rem;">
-                        <i class="fas fa-location-dot" style="color: #e74c3c;"></i> Baguio, Benguet
-                    </h3>
-                    <p style="color: #7f8c8d; line-height: 1.6; margin-bottom: 1.5rem;">
-                        Visit us in the beautiful mountain city known as the summer capital of the Philippines.
-                    </p>
+            <div class="map-info-column">
+                <div class="map-location-header">
+                    <h3><i class="fas fa-location-dot"></i> Baguio, Benguet</h3>
+                    <p>Visit our flagship recording studio in the beautiful mountain city known as the summer capital of the Philippines.</p>
                 </div>
                 
-                <div style="margin-bottom: 1.5rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                    <h4 style="display: flex; align-items: center; gap: 8px; color: #2c3e50; font-size: 1.2rem; margin-top: 0; margin-bottom: 0.8rem;">
-                        <i class="fas fa-globe-americas" style="color: #3498db;"></i> 
-                        <span>Coordinates</span>
-                    </h4>
-                    <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-arrow-up" style="color: #7f8c8d; font-size: 0.9rem;"></i>
-                            <span style="font-family: monospace; background: white; padding: 4px 8px; border-radius: 4px; font-weight: 500;">16.4129692° N</span>
-                            <span style="color: #7f8c8d; font-size: 0.9rem;">Latitude</span>
+                <div class="map-info-card map-coordinates-card">
+                    <h4><i class="fas fa-globe-americas"></i> Coordinates</h4>
+                    <div class="coordinate-display">
+                        <div class="coordinate-row">
+                            <i class="fas fa-arrow-up"></i>
+                            <span class="coordinate-value">16.4129692° N</span>
+                            <span class="coordinate-label">Latitude</span>
                         </div>
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fas fa-arrow-right" style="color: #7f8c8d; font-size: 0.9rem;"></i>
-                            <span style="font-family: monospace; background: white; padding: 4px 8px; border-radius: 4px; font-weight: 500;">120.5913973° E</span>
-                            <span style="color: #7f8c8d; font-size: 0.9rem;">Longitude</span>
+                        <div class="coordinate-row">
+                            <i class="fas fa-arrow-right"></i>
+                            <span class="coordinate-value">120.5913973° E</span>
+                            <span class="coordinate-label">Longitude</span>
                         </div>
                     </div>
                 </div>
                 
-                <div style="margin-bottom: 2rem; padding: 1rem; background: #f8f9fa; border-radius: 8px;">
-                    <h4 style="display: flex; align-items: center; gap: 8px; color: #2c3e50; font-size: 1.2rem; margin-top: 0; margin-bottom: 0.8rem;">
-                        <i class="fas fa-info-circle" style="color: #2ecc71;"></i> 
-                        <span>About Baguio</span>
-                    </h4>
-                    <p style="color: #555; line-height: 1.6; margin: 0;">
-                        Known as the <strong>"Summer Capital of the Philippines"</strong>, Baguio is located in the Cordillera Central mountain range of Northern Luzon. The city is famous for its cool climate, pine trees, and vibrant culture.
-                    </p>
+                <div class="map-info-card map-about-card">
+                    <h4><i class="fas fa-info-circle"></i> About Baguio</h4>
+                    <p>Known as the <strong style="color: #ff6b8b;">"Summer Capital of the Philippines"</strong>, Baguio is located in the Cordillera Central mountain range of Northern Luzon. The city is famous for its cool climate, pine trees, and vibrant music scene. Our studio here captures the natural acoustics of the mountains.</p>
                 </div>
                 
-                <div style="margin-top: auto;">
+                <div class="map-button-container">
                     <a href="https://www.google.com/maps/place/Baguio,+Benguet/@16.3960013,120.5899162,13z/data=!3m1!4b1!4m6!3m5!1s0x3391a16879def13f:0x8edef534be3a75c0!8m2!3d16.4129692!4d120.5913973!16zL20vMDE1bDFf?entry=ttu&g_ep=EgoyMDI1MTEzMC4wIKXMDSoASAFQAw%3D%3D" 
                        target="_blank" 
                        rel="noopener noreferrer"
-                       style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; padding: 14px 28px; background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; text-decoration: none; border-radius: 8px; font-weight: 600; transition: all 0.3s ease; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3); width: 100%; text-align: center;">
+                       class="map-button">
                         <i class="fas fa-external-link-alt"></i>
                         Open in Google Maps
                     </a>
-                    <p style="color: #7f8c8d; font-size: 0.85rem; text-align: center; margin-top: 10px;">
-                        Opens in a new window
-                    </p>
+                    <p class="button-note">Opens in a new window</p>
                 </div>
             </div>
         </div>
         
-        <div style="margin-top: 2rem; padding: 1.5rem; background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);">
-            <h4 style="color: #2c3e50; font-size: 1.2rem; margin-top: 0; margin-bottom: 1rem;">
-                <i class="fas fa-directions" style="color: #9b59b6; margin-right: 8px;"></i> Getting Here
-            </h4>
-            <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-                <div style="flex: 1; min-width: 200px;">
-                    <h5 style="color: #34495e; font-size: 1rem; margin-bottom: 0.5rem;"><i class="fas fa-car" style="color: #e74c3c; margin-right: 6px;"></i> By Car</h5>
-                    <p style="color: #555; font-size: 0.9rem; margin: 0; line-height: 1.5;">Approximately 4-6 hours from Manila via NLEX, SCTEX, and TPLEX.</p>
+        <div class="getting-here-section">
+            <h4><i class="fas fa-directions"></i> Getting Here</h4>
+            <div class="transport-options">
+                <div class="transport-option">
+                    <h5><i class="fas fa-car"></i> By Car</h5>
+                    <p>Approximately 4-6 hours from Manila via NLEX, SCTEX, and TPLEX. Ample parking available at our facility.</p>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <h5 style="color: #34495e; font-size: 1rem; margin-bottom: 0.5rem;"><i class="fas fa-bus" style="color: #f39c12; margin-right: 6px;"></i> By Bus</h5>
-                    <p style="color: #555; font-size: 0.9rem; margin: 0; line-height: 1.5;">Regular bus services from Manila, Dagupan, and other major cities.</p>
+                <div class="transport-option">
+                    <h5><i class="fas fa-bus"></i> By Bus</h5>
+                    <p>Regular bus services from Manila, Dagupan, and other major cities. Our studio is 15 minutes from the terminal.</p>
                 </div>
-                <div style="flex: 1; min-width: 200px;">
-                    <h5 style="color: #34495e; font-size: 1rem; margin-bottom: 0.5rem;"><i class="fas fa-plane" style="color: #3498db; margin-right: 6px;"></i> By Air</h5>
-                    <p style="color: #555; font-size: 0.9rem; margin: 0; line-height: 1.5;">Loakan Airport serves chartered flights (commercial flights currently suspended).</p>
+                <div class="transport-option">
+                    <h5><i class="fas fa-plane"></i> By Air</h5>
+                    <p>Loakan Airport serves chartered flights (commercial flights currently suspended). We can arrange airport pickup.</p>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
     <!-- FAQ Section -->
     <section class="faq-section">
         <h2><i class="fas fa-question-circle"></i> Frequently Asked Questions</h2>
